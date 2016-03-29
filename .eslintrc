@@ -1,0 +1,6 @@
+{
+  "extends": "google",
+  "env": {
+    "browser": true
+  }
+}
