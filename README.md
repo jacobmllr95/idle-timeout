@@ -15,8 +15,8 @@ npm install idle-timeout --save
 ```
 
 ### Download
-* [Compressed ~3kb](https://raw.github.com/jackmu95/IdleTimeout/master/dist/idle-timeout.min.js)
-* [Uncompressed ~13kb](https://raw.github.com/jackmu95/IdleTimeout/master/dist/idle-timeout.js)
+* [Compressed ~3kb](https://raw.github.com/jackmu95/idle-timeout/master/dist/idle-timeout.min.js)
+* [Uncompressed ~13kb](https://raw.github.com/jackmu95/idle-timeout/master/dist/idle-timeout.js)
 
 
 ## Usage
@@ -30,9 +30,9 @@ new IdleTimeout(function() {
 
 ## Documentation
 The IdleTimeout constructor takes two arguments:
-  1. `callback [Function]` - *The callback function*
-  2. `options [Object]` - *An **optional** options object*
-    * `timeout [Number]` - *The idle timeout (in milliseconds)*
+  1. `callback [Function]` - _The callback function_
+  2. `options [Object]` - _An **optional** options object_
+    * `timeout [Number]` - _The idle timeout (in milliseconds)_
 
 ```javascript
 var idleTimeout = new IdleTimeout(function() {
@@ -43,24 +43,24 @@ var idleTimeout = new IdleTimeout(function() {
 ```
 
 ### Methods
-`reset()` - *Reset the timeout*
+`reset()` - _Reset the timeout_
 ```javascript
 idleTimeout.reset();
 ```
 
-`destroy()` - *Destroy the instance*
+`destroy()` - _Destroy the instance_
 ```javascript
 idleTimeout.destroy();
 ```
 
 ### Getters
-`idle()` - *Wether the current state is idle*
+`idle()` - _Wether the current state is idle_
 ```javascript
 idleTimeout.idle(); // false
 ```
 
 ### Setters
-`idle(value [Boolean])` - *Set the current idle state*
+`idle(value [Boolean])` - _Set the current idle state_
 ```javascript
 idleTimeout.idle(true);
 ```
