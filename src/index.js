@@ -13,8 +13,6 @@ import {extend} from './utils';
 
 class IdleTimeout {
   constructor(callback, options = {}) {
-    this.CLASS_NAME = 'IdleTimeout';
-
     this._timeoutFunction = null;
     this._idle = false;
 
