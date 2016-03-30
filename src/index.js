@@ -26,6 +26,8 @@ class IdleTimeout {
       'wheel'
     ];
 
+    this._startTime = null;
+    this._remainingTime = null;
     this._lastPageX = -1;
     this._lastPageY = -1;
 
@@ -58,10 +60,16 @@ class IdleTimeout {
 
     this._timeoutFunction = setTimeout(() => {
       this._handleTimeout();
-    }, this._options.timeout);
+    }, this._remainingTime || this._options.timeout);
+
+    this._startTime = new Date().getTime();
   }
 
   _handleEvent(event) {
+    if (this._remainingTime) {
+      return false;
+    }
+
     if (event.type === 'mousemove') {
       if ((typeof event.pageX === 'undefined' &&
               typeof event.pageY === 'undefined') ||
@@ -84,8 +92,33 @@ class IdleTimeout {
     this._callback();
   }
 
+  pause() {
+    let remainingTime = this._startTime + this._options.timeout -
+        new Date().getTime();
+    if (remainingTime <= 0) {
+      return;
+    }
+
+    this._remainingTime = remainingTime;
+
+    if (this._timeoutFunction) {
+      clearTimeout(this._timeoutFunction);
+      this._timeoutFunction = null;
+    }
+  }
+
+  resume() {
+    if (!this._remainingTime) {
+      return;
+    }
+
+    this._reset();
+    this._remainingTime = null;
+  }
+
   reset() {
     this._idle = false;
+    this._remainingTime = null;
     this._reset();
   }
 
@@ -102,6 +135,8 @@ class IdleTimeout {
     this._idle = null;
     this._boundHandleEvent = null;
     this._eventNames = null;
+    this._startTime = null;
+    this._remainingTime = null;
     this._lastPageX = null;
     this._lastPageY = null;
     this._callback = null;

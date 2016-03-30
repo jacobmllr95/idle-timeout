@@ -45,6 +45,16 @@ var idleTimeout = new IdleTimeout(function() {
 ```
 
 ### Methods
+`pause()` - _Pauses the timeout_
+```javascript
+idleTimeout.pause();
+```
+
+`resume()` - _Resumes an paused timeout_
+```javascript
+idleTimeout.resume();
+```
+
 `reset()` - _Reset the timeout_
 ```javascript
 idleTimeout.reset();
