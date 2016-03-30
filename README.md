@@ -54,15 +54,15 @@ idleTimeout.destroy();
 ```
 
 ### Getters
-`idle()` - _Wether the current state is idle_
+`idle [Boolean]` - _Wether the current state is idle_
 ```javascript
-idleTimeout.idle(); // false
+idleTimeout.idle; // false
 ```
 
 ### Setters
-`idle(value [Boolean])` - _Set the current idle state_
+`idle = value [Boolean]` - _Set the idle state_
 ```javascript
-idleTimeout.idle(true);
+idleTimeout.idle = true;
 ```
 
 
