@@ -114,6 +114,14 @@ class IdleTimeout {
     return this._idle;
   }
 
+  set timeout(value) {
+    this._options.timeout = value;
+  }
+
+  set loop(value) {
+    this._options.loop = value;
+  }
+
   set idle(value) {
     if (value) {
       this._handleTimeout();

@@ -62,6 +62,16 @@ idleTimeout.idle; // false
 ```
 
 ### Setters
+`timeout = value [Number]` - _Set the timeout (in milliseconds)_
+```javascript
+idleTimeout.timeout = 60 * 1000;
+```
+
+`loop = value [Boolean]` - _Set wether the timeout should be looped_
+```javascript
+idleTimeout.loop = true;
+```
+
 `idle = value [Boolean]` - _Set the idle state_
 ```javascript
 idleTimeout.idle = true;
