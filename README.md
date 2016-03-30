@@ -16,7 +16,7 @@ npm install idle-timeout --save
 
 ### Download
 * [Compressed ~3kb](https://raw.github.com/jackmu95/idle-timeout/master/dist/idle-timeout.min.js)
-* [Uncompressed ~13kb](https://raw.github.com/jackmu95/idle-timeout/master/dist/idle-timeout.js)
+* [Uncompressed ~16kb](https://raw.github.com/jackmu95/idle-timeout/master/dist/idle-timeout.js)
 
 
 ## Usage
