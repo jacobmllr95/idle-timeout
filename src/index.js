@@ -33,7 +33,8 @@ class IdleTimeout {
 
     this._callback = callback;
     this._options = extend({
-      timeout: 60 * 1000 * 5
+      timeout: 60 * 1000 * 5,
+      loop: false
     }, options);
 
     this._init();
@@ -53,7 +54,7 @@ class IdleTimeout {
       this._timeoutFunction = null;
     }
 
-    if (this._idle) {
+    if (this._idle && !this._options.loop) {
       return;
     }
 

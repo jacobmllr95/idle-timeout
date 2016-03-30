@@ -33,12 +33,14 @@ The IdleTimeout constructor takes two arguments:
   1. `callback [Function]` - _The callback function_
   2. `options [Object]` - _An **optional** options object_
     * `timeout [Number]` - _The idle timeout (in milliseconds)_
+    * `loop [Boolean]` - _Wether the timeout should be looped when idle_
 
 ```javascript
 var idleTimeout = new IdleTimeout(function() {
   // Callback
 }, {
-  timeout: 60 * 1000 * 5
+  timeout: 60 * 1000 * 5,
+  loop: false
 });
 ```
 
