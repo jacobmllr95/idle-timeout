@@ -32,6 +32,7 @@ new IdleTimeout(function() {
 The IdleTimeout constructor takes two arguments:
   1. `callback [Function]` - _The callback function_
   2. `options [Object]` - _An **optional** options object_
+    * `element [Element]` - _The element to listen for the timeout_
     * `timeout [Number]` - _The idle timeout (in milliseconds)_
     * `loop [Boolean]` - _Wether the timeout should be looped when idle_
 
@@ -39,6 +40,7 @@ The IdleTimeout constructor takes two arguments:
 var idleTimeout = new IdleTimeout(function() {
   // Callback
 }, {
+  element: document,
   timeout: 60 * 1000 * 5,
   loop: false
 });

@@ -33,6 +33,7 @@ class IdleTimeout {
 
     this._callback = callback;
     this._options = extend({
+      element: document,
       timeout: 60 * 1000 * 5,
       loop: false
     }, options);
@@ -42,7 +43,7 @@ class IdleTimeout {
 
   _init() {
     this._eventNames.forEach(eventName => {
-      document.addEventListener(eventName, this._boundHandleEvent);
+      this._options.element.addEventListener(eventName, this._boundHandleEvent);
     });
 
     this._reset();
@@ -124,7 +125,8 @@ class IdleTimeout {
 
   destroy() {
     this._eventNames.forEach(eventName => {
-      document.removeEventListener(eventName, this._boundHandleEvent);
+      this._options.element.removeEventListener(
+          eventName, this._boundHandleEvent);
     });
 
     if (this._timeoutFunction) {
