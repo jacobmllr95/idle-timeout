@@ -1,6 +1,6 @@
 {
   "name": "idle-timeout",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A basic idle state detector written in ES6.",
   "main": "src/index.js",
   "license": "MIT",

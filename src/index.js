@@ -1,7 +1,7 @@
 /*!
  * IdleTimeout
  *
- * @version 0.0.3
+ * @version 0.0.4
  * @overview A basic idle state detector written in ES6.
  * @author Jacob Müller [jacob.mueller.elz@gmail.com]
  * @see {@link https://github.com/jackmu95/idle-timeout|GitHub}
