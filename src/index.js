@@ -9,8 +9,6 @@
 
 'use strict';
 
-import {extend} from './utils';
-
 class IdleTimeout {
   constructor(callback, options = {}) {
     this._timeoutFunction = null;
@@ -32,7 +30,7 @@ class IdleTimeout {
     this._lastPageY = -1;
 
     this._callback = callback;
-    this._options = extend({
+    this._options = Object.assign({
       element: document,
       timeout: 60 * 1000 * 5,
       loop: false
@@ -167,4 +165,3 @@ class IdleTimeout {
 }
 
 window.IdleTimeout = IdleTimeout;
-export default IdleTimeout;

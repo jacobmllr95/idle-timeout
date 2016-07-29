@@ -1,72 +1,64 @@
 'use strict';
 
-import gulp from 'gulp';
-import gulpLoadPlugins from 'gulp-load-plugins';
-
 import fs from 'fs';
 import del from 'del';
-import browserify from 'browserify';
-import babelify from 'babelify';
-import source from 'vinyl-source-stream';
+import gulp from 'gulp';
+import gulpLoadPlugins from 'gulp-load-plugins';
 
 const plugins = gulpLoadPlugins();
 const pkg = JSON.parse(fs.readFileSync('./package.json'));
 
+const GLOB_JS = '**/*.js';
+const SCRIPT_NAME = 'idle-timeout.js';
 const PATHS = {
   src: './src/',
   dist: './dist/'
 };
 
-const GLOB = {
-  index: 'index.js',
-  idleTimeout: 'idle-timeout.js',
-  js: '**/*.js'
-};
-
-// Clean up the `dist` directory
+// Clean up `dist` directory
 gulp.task('dist:clean', callback => {
-  del(`${PATHS.dist}*`).then(() => {
-    callback();
-  });
+  return del(`${PATHS.dist}*`, callback);
 });
 
-// Lint the JavaScript files
+// Lint JavaScript files
 gulp.task('dist:lint-js', ['dist:clean'], () => {
-  gulp.src(`${PATHS.src}${GLOB.js}`)
+  return gulp.src(`${PATHS.src}${GLOB_JS}`)
       .pipe(plugins.eslint())
       .pipe(plugins.eslint.format());
 });
 
-// Compile the ES6 JavaScript files to ES5
+// Compile ES6 JavaScript files to ES5
 gulp.task('dist:js', ['dist:lint-js'], () => {
-  return browserify(`${PATHS.src}${GLOB.index}`, {debug: true})
-      .transform(babelify).bundle()
-      .pipe(source(GLOB.idleTimeout))
-      .pipe(gulp.dest(`${PATHS.dist}`));
+  return gulp.src(`${PATHS.src}${GLOB_JS}`)
+      .pipe(plugins.sourcemaps.init())
+      .pipe(plugins.babel())
+      .pipe(plugins.concat(SCRIPT_NAME))
+      .pipe(plugins.sourcemaps.write())
+      .pipe(gulp.dest(PATHS.dist));
 });
 
-// Minify the JavaScript files
+// Minify JavaScript files
 gulp.task('dist:minify-js', ['dist:js'], () => {
-  let banner = '/*! ' +
+  const BANNER = '/*! ' +
       `IdleTimeout v${pkg.version} | ` +
       `${pkg.repository.url} | ` +
       `(c) 2016 ${pkg.maintainers[0].name} ` +
-      '*/';
+      '*/\n';
 
-  gulp.src(`${PATHS.dist}${GLOB.idleTimeout}`)
+  return gulp.src(`${PATHS.dist}${GLOB_JS}`)
       .pipe(plugins.uglify())
-      .pipe(plugins.header(`${banner}\n`))
+      .pipe(plugins.header(BANNER))
       .pipe(plugins.rename({suffix: '.min'}))
       .pipe(gulp.dest(PATHS.dist));
 });
 
-// Rerun the depending task when a file changes
+// Watch source files to compile on change
 gulp.task('watch', () => {
-  gulp.watch(`${PATHS.src}${GLOB.js}`, ['dist']);
+  return gulp.watch(`${PATHS.src}${GLOB_JS}`, ['dist']);
 });
 
-// The distribution task
+// Distribution task
 gulp.task('dist', ['dist:clean', 'dist:lint-js', 'dist:js', 'dist:minify-js']);
 
-// The default task (called when you run `gulp` from CLI)
+// Default task (called when you run `gulp` from CLI)
 gulp.task('default', ['dist']);
