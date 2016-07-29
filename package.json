@@ -2,7 +2,7 @@
   "name": "idle-timeout",
   "version": "0.0.4",
   "description": "A basic idle state detector written in ES6.",
-  "main": "src/index.js",
+  "main": "dist/idle-timeout.js",
   "license": "MIT",
   "repository": {
     "type": "git",
