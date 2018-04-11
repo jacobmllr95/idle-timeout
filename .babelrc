@@ -1,4 +1,5 @@
 {
-  "presets": ["es2015"],
-  "plugins": ["transform-object-assign"]
+  "presets": [
+    ["@babel/preset-env", { "modules": false }]
+  ]
 }
