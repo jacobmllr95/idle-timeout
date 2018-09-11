@@ -1,7 +1,10 @@
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const camelCase = require('lodash.camelcase');
 const path = require('path');
 const webpack = require('webpack');
+
+const BannerPlugin = webpack.BannerPlugin;
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 const pkg = require('./package.json');
 
 const filename = pkg.name;
@@ -42,8 +45,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new webpack.BannerPlugin({ banner, raw: true }),
-    new UglifyJsPlugin({ include: /\.min\.js$/ })
-  ]
+  plugins: [new BannerPlugin({ banner, raw: true }), new UglifyJsPlugin({ include: /\.min\.js$/ })]
 };
