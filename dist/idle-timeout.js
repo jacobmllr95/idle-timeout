@@ -1,4 +1,4 @@
-/*! idleTimeout v1.1.0 | Copyright (c) 2016-2018 Jacob Müller */
+/*! idleTimeout v1.1.1 | Copyright (c) 2016-2018 Jacob Müller */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
