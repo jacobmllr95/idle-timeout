@@ -100,9 +100,9 @@ instance.idle = true;
 
 ## Browser Support
 
-<center>Chrome<br><img src="https://cdn.rawgit.com/alrra/browser-logos/master/src/chrome/chrome.svg" width="48" height="48" alt="Chrome"></center> | <center>Firefox<br><img src="https://cdn.rawgit.com/alrra/browser-logos/master/src/firefox/firefox.svg" width="48" height="48" alt="Firefox"></center> | <center>Safari<br><img src="https://cdn.rawgit.com/alrra/browser-logos/master/src/safari/safari_128x128.png" width="48" height="48" alt="Safari"></center> | <center>Opera<br><img src="https://cdn.rawgit.com/alrra/browser-logos/master/src/opera/opera.svg" width="48" height="48" alt="Opera"></center> | <center>Edge<br><img src="https://cdn.rawgit.com/alrra/browser-logos/master/src/edge/edge.svg" width="48" height="48" alt="Edge"></center> | <center>IE<br><img src="https://cdn.rawgit.com/alrra/browser-logos/master/src/archive/internet-explorer_9-11/internet-explorer_9-11.svg" width="48" height="48" alt="IE"></center> |
---- | --- | --- | --- | --- | --- |
-<center>Latest 2</center> | <center>Latest 2</center> | <center>Latest 2</center> | <center>Latest 2</center> | <center>Latest 2</center> | <center>11</center> |
+| Chrome<br><img src="https://cdn.rawgit.com/alrra/browser-logos/master/src/chrome/chrome.svg" width="48" height="48" alt="Chrome"> | Firefox<br><img src="https://cdn.rawgit.com/alrra/browser-logos/master/src/firefox/firefox.svg" width="48" height="48" alt="Firefox"> | Safari<br><img src="https://cdn.rawgit.com/alrra/browser-logos/master/src/safari/safari_128x128.png" width="48" height="48" alt="Safari"> | Opera<br><img src="https://cdn.rawgit.com/alrra/browser-logos/master/src/opera/opera.svg" width="48" height="48" alt="Opera"> | Edge<br><img src="https://cdn.rawgit.com/alrra/browser-logos/master/src/edge/edge.svg" width="48" height="48" alt="Edge"> | IE<br><img src="https://cdn.rawgit.com/alrra/browser-logos/master/src/archive/internet-explorer_9-11/internet-explorer_9-11.svg" width="48" height="48" alt="IE"> |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| Latest 2 | Latest 2 | Latest 2 | Latest 2 | Latest 2 | 11 |
 
 
 ## License
