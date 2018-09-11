@@ -1,11 +1,8 @@
 {
   "extends": ["airbnb-base/legacy", "plugin:prettier/recommended"],
   "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true
-    }
+    "ecmaVersion": 2018,
+    "sourceType": "module"
   },
   "env": {
     "browser": true,
