@@ -39,12 +39,14 @@
   "files": [
     "dist/",
     "lib/",
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
   "lint-staged": {
     "*.js": [
       "npm run prettify",
       "git add"
     ]
-  }
+  },
+  "types": "index.d.ts"
 }
