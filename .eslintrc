@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb-base/legacy", "plugin:prettier/recommended"],
+  "extends": ["airbnb-base/legacy", "typescript", "typescript/prettier"],
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module"
@@ -9,6 +9,7 @@
     "es6": true
   },
   "rules": {
-    "no-mixed-operators": "off"
+    "no-mixed-operators": "off",
+    "typescript/adjacent-overload-signatures": "off"
   }
 }
