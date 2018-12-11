@@ -183,6 +183,18 @@ export default class IdleTimeout {
   }
 
   /**
+   * Sets whether the timeout is idle.
+   * @param {boolean} value Whether the timeout is idle.
+   */
+  public set idle(value: boolean) {
+    if (value) {
+      this.handleTimeout();
+    } else {
+      this.reset();
+    }
+  }
+
+  /**
    * Sets wether the timeout should restart on completion.
    * @param {boolean} value Wether the timeout should restart on completion.
    */
@@ -196,17 +208,5 @@ export default class IdleTimeout {
    */
   public set timeout(value: number) {
     this.options.timeout = value;
-  }
-
-  /**
-   * Sets whether the timeout is idle.
-   * @param {boolean} value Whether the timeout is idle.
-   */
-  public set idle(value: boolean) {
-    if (value) {
-      this.handleTimeout();
-    } else {
-      this.reset();
-    }
   }
 }

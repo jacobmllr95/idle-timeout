@@ -3,8 +3,8 @@
   "version": "1.1.1",
   "description": "A basic idle state detector written in ES6.",
   "repository": "jackmu95/idle-timeout",
-  "main": "dist/idle-timeout.js",
-  "index": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "maintainers": [
     {
@@ -13,34 +13,17 @@
     }
   ],
   "scripts": {
-    "build": "webpack --progress --hide-modules",
-    "watch": "webpack --watch --progress --hide-modules",
-    "lint": "eslint 'src/**/*.{js,ts}'",
-    "prettify": "prettier --write src/**/*.{js,ts} webpack.config.js",
+    "build": "tsc",
+    "lint": "tslint -p tsconfig.json",
+    "prettify": "prettier --write src/**/*.{js,ts}",
     "precommit": "lint-staged"
   },
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "7.1.0",
-    "@babel/plugin-proposal-object-rest-spread": "7.0.0",
-    "@babel/preset-env": "7.1.0",
-    "babel-loader": "8.0.2",
-    "eslint": "5.6.0",
-    "eslint-config-airbnb-base": "13.1.0",
-    "eslint-config-prettier": "3.1.0",
-    "eslint-config-typescript": "1.1.0",
-    "eslint-loader": "2.1.1",
-    "eslint-plugin-prettier": "2.6.2",
-    "eslint-plugin-typescript": "0.12.0",
-    "lint-staged": "7.3.0",
-    "lodash.camelcase": "4.3.0",
-    "prettier": "1.14.3",
-    "ts-loader": "5.2.0",
-    "typescript": "3.0.3",
-    "typescript-eslint-parser": "18.0.0",
-    "uglifyjs-webpack-plugin": "2.0.1",
-    "webpack": "4.19.1",
-    "webpack-cli": "3.1.1"
+    "prettier": "^1.15.3",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.17.0",
+    "typescript": "^3.2.1"
   },
   "files": [
     "dist",
