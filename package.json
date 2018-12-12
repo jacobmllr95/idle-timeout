@@ -13,17 +13,20 @@
     }
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && webpack --progress --hide-modules",
     "lint": "tslint -p tsconfig.json",
     "prettify": "prettier --write src/**/*.{js,ts}",
     "precommit": "lint-staged"
   },
   "dependencies": {},
   "devDependencies": {
+    "lodash.camelcase": "^4.3.0",
     "prettier": "^1.15.3",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.17.0",
-    "typescript": "^3.2.1"
+    "typescript": "^3.2.1",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2"
   },
   "files": [
     "dist",

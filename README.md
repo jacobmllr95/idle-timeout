@@ -4,7 +4,7 @@
 [![Size](https://badgen.net/badgesize/normal/jackmu95/idle-timeout/master/dist/idle-timeout.min.js)](https://github.com/jackmu95/idle-timeout/blob/master/dist/idle-timeout.min.js)
 [![License](https://badgen.net/npm/license/idle-timeout)](https://www.npmjs.com/package/idle-timeout/)
 
-A zero dependency, ~5KB library to make idle state detection in the browser an ease. With it's simple but yet powerful API it features everything you will ever need.
+A zero dependency, ~4KB library to make idle state detection in the browser an ease. With it's simple but yet powerful API it features everything you will ever need.
 
 ## Installation
 

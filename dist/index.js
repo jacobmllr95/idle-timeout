@@ -1,5 +1,0 @@
-import IdleTimeout from './IdleTimeout';
-export default (function (callback, options) {
-    return new IdleTimeout(callback, options);
-});
-//# sourceMappingURL=index.js.map
