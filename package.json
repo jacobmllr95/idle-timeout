@@ -4,6 +4,7 @@
   "description": "A basic idle state detector written in ES6.",
   "repository": "jackmu95/idle-timeout",
   "main": "dist/index.js",
+  "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
   "maintainers": [
@@ -13,7 +14,10 @@
     }
   ],
   "scripts": {
-    "build": "tsc && webpack --progress --hide-modules",
+    "build": "npm run build:common &&  npm run build:esm && npm run build:min",
+    "build:common": "tsc --module commonjs --target es5 --outDir dist",
+    "build:esm": "tsc --outDir dist/esm --declaration false",
+    "build:min": "webpack --progress --hide-modules",
     "lint": "tslint -p tsconfig.json",
     "prettify": "prettier --write src/**/*.{js,ts}",
     "precommit": "lint-staged"
@@ -21,12 +25,12 @@
   "dependencies": {},
   "devDependencies": {
     "lodash.camelcase": "^4.3.0",
-    "prettier": "^1.15.3",
-    "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.17.0",
-    "typescript": "^3.2.1",
-    "webpack": "^4.27.1",
-    "webpack-cli": "^3.1.2"
+    "prettier": "^1.17.0",
+    "tslint": "^5.16.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.4.5",
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2"
   },
   "files": [
     "dist",
