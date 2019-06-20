@@ -1,7 +1,7 @@
 {
-  "extends": ["airbnb-base/legacy", "typescript", "typescript/prettier"],
+  "extends": ["plugin:@typescript-eslint/recommended", "prettier", "prettier/@typescript-eslint"],
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "parser": "babel-eslint",
     "sourceType": "module"
   },
   "env": {
@@ -9,7 +9,6 @@
     "es6": true
   },
   "rules": {
-    "no-mixed-operators": "off",
-    "typescript/adjacent-overload-signatures": "off"
+    "@typescript-eslint/adjacent-overload-signatures": "off"
   }
 }

@@ -1,5 +1,7 @@
 import IdleTimeout from './IdleTimeout';
 import OptionsInterface from './interfaces/Options';
 
-export default (callback: () => void, options?: OptionsInterface | undefined) =>
+const idleTimeout = (callback: () => void, options?: OptionsInterface | undefined): IdleTimeout =>
   new IdleTimeout(callback, options);
+
+export default idleTimeout;

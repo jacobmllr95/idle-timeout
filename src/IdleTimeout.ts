@@ -1,6 +1,6 @@
 import OptionsInterface from './interfaces/Options';
 
-/** Creates an idle timeout instnace. */
+/** Creates an idle timeout instance. */
 export default class IdleTimeout {
   /** The callback function to invoke when the timeout is complete. */
   protected callback: () => void;
@@ -56,7 +56,7 @@ export default class IdleTimeout {
     };
 
     const element = this.options.element;
-    this.eventNames.forEach(eventName => {
+    this.eventNames.forEach((eventName): void => {
       element.addEventListener(eventName, this.handleEvent);
     });
 
@@ -76,7 +76,7 @@ export default class IdleTimeout {
     this.remainingTime = remainingTime;
 
     if (this.timeoutHandle) {
-      clearTimeout(this.timeoutHandle);
+      window.clearTimeout(this.timeoutHandle);
       this.timeoutHandle = null;
     }
   }
@@ -110,12 +110,12 @@ export default class IdleTimeout {
    */
   public destroy(): void {
     const element = this.options.element;
-    this.eventNames.forEach(eventName => {
+    this.eventNames.forEach((eventName): void => {
       element.removeEventListener(eventName, this.handleEvent);
     });
 
     if (this.timeoutHandle) {
-      clearTimeout(this.timeoutHandle);
+      window.clearTimeout(this.timeoutHandle);
     }
   }
 
@@ -125,7 +125,7 @@ export default class IdleTimeout {
    */
   protected resetTimeout(): void {
     if (this.timeoutHandle) {
-      clearTimeout(this.timeoutHandle);
+      window.clearTimeout(this.timeoutHandle);
       this.timeoutHandle = null;
     }
 
@@ -133,7 +133,7 @@ export default class IdleTimeout {
       return;
     }
 
-    this.timeoutHandle = setTimeout(() => {
+    this.timeoutHandle = window.setTimeout((): void => {
       this.handleTimeout();
     }, this.remainingTime || this.options.timeout);
 
@@ -178,7 +178,7 @@ export default class IdleTimeout {
   }
 
   /** Gets whether the timeout is idle. */
-  public get idle() {
+  public get idle(): boolean {
     return this.isIdle;
   }
 
