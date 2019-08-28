@@ -9,6 +9,7 @@
     "es6": true
   },
   "rules": {
-    "@typescript-eslint/adjacent-overload-signatures": "off"
+    "@typescript-eslint/adjacent-overload-signatures": "off",
+    "@typescript-eslint/no-inferrable-types": "off"
   }
 }
