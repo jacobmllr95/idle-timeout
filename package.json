@@ -29,7 +29,7 @@
     "eslint-config-prettier": "6.10.0",
     "eslint-plugin-prettier": "3.1.2",
     "husky": "4.2.3",
-    "lodash": "4.17.19",
+    "lodash": "4.17.21",
     "prettier": "1.19.1",
     "pretty-quick": "2.0.1",
     "rollup": "2.1.0",
