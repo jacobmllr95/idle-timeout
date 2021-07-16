@@ -174,7 +174,7 @@ export default class IdleTimeout {
     this.isIdle = true;
     this.resetTimeout();
 
-    this.callback();
+    this.callback(this.options.element);
   }
 
   /** Gets whether the timeout is idle. */
