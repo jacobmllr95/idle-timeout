@@ -44,7 +44,7 @@ The idleTimeout constructor takes two arguments:
 - `options [Object]` - _An **optional** options object_
   - `element [Element]` - _The element to listen for the timeout_
   - `timeout [Number]` - _The idle timeout (in milliseconds)_
-  - `loop [Boolean]` - _Wether the timeout should be looped when idle_
+  - `loop [Boolean]` - _Whether the timeout should be looped when idle_
 
 ```javascript
 const instance = idleTimeout(
@@ -87,11 +87,10 @@ instance.destroy();
 
 ### Getters
 
-`idle [Boolean]` - _Wether the current state is idle_
+`idle [Boolean]` - _Whether the current state is idle_
 
 ```javascript
 instance.idle; // false
-```
 
 ### Setters
 
@@ -101,7 +100,7 @@ instance.idle; // false
 instance.timeout = 1000 * 60;
 ```
 
-`loop = value [Boolean]` - _Set wether the timeout should be looped_
+`loop = value [Boolean]` - _Set whether the timeout should be looped_
 
 ```javascript
 instance.loop = true;
