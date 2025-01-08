@@ -3,7 +3,7 @@ import OptionsInterface from './interfaces/Options';
 /** Creates an idle timeout instance. */
 export default class IdleTimeout {
   /** The callback function to invoke when the timeout is complete. */
-  protected callback: () => void;
+  protected callback: (element: HTMLElement) => void;
 
   /** The merged configuration options for the timeout. */
   protected options: OptionsInterface;
@@ -46,7 +46,7 @@ export default class IdleTimeout {
    * @param {object} [options] The configuration options for the timeout.
    * @returns {void}
    */
-  public constructor(callback: () => void, options?: OptionsInterface) {
+  public constructor(callback: (element: HTMLElement) => void, options?: OptionsInterface) {
     this.callback = callback;
     this.options = {
       element: document.body,
@@ -56,6 +56,7 @@ export default class IdleTimeout {
     };
 
     const element = this.options.element;
+
     this.eventNames.forEach((eventName): void => {
       element.addEventListener(eventName, this.handleEvent);
     });
@@ -110,6 +111,7 @@ export default class IdleTimeout {
    */
   public destroy(): void {
     const element = this.options.element;
+
     this.eventNames.forEach((eventName): void => {
       element.removeEventListener(eventName, this.handleEvent);
     });
