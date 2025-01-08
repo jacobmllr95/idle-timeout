@@ -47,6 +47,7 @@ idleTimeout(() => {
 The idleTimeout constructor takes two arguments:
 
 - `callback [Function]` - _The callback function_
+  - `element [Element]` - _The element that was listened for the timeout_
 - `options [Object]` - _An **optional** options object_
   - `element [Element]` - _The element to listen for the timeout_
   - `timeout [Number]` - _The idle timeout (in milliseconds)_
@@ -54,7 +55,7 @@ The idleTimeout constructor takes two arguments:
 
 ```javascript
 const instance = idleTimeout(
-  () => {
+  (element) => {
     // Callback
   },
   {
