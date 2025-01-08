@@ -19,7 +19,6 @@
     "lint": "eslint 'src/**/*.ts'",
     "prettify": "prettier --write '**/*.{md,ts}'"
   },
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "7.26.0",
     "@babel/preset-env": "7.26.0",
@@ -34,7 +33,6 @@
     "eslint-plugin-prettier": "5.2.1",
     "globals": "15.14.0",
     "husky": "9.1.7",
-    "lodash": "4.17.21",
     "prettier": "3.4.2",
     "pretty-quick": "4.0.0",
     "rollup": "4.30.1",
