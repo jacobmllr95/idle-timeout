@@ -1,5 +1,5 @@
 /** Configuration options for the timeout. */
-export default interface Options {
+export interface Options {
   /** The element to listen for the timeout. */
   element: HTMLElement;
 
