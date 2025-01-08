@@ -14,6 +14,12 @@ A zero dependency, ~3KB library to make idle state detection in the browser an e
 npm install idle-timeout
 ```
 
+### Using pnpm
+
+```bash
+pnpm add idle-timeout
+```
+
 ### Using yarn
 
 ```bash
