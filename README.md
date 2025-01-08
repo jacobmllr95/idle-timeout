@@ -91,6 +91,7 @@ instance.destroy();
 
 ```javascript
 instance.idle; // false
+```
 
 ### Setters
 
