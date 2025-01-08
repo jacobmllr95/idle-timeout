@@ -1,8 +1,8 @@
-# [idleTimeout](https://github.com/jackmu95/idle-timeout/)
+# [idleTimeout](https://github.com/jacobmllr95/idle-timeout/)
 
 [![Version](https://badgen.net/npm/v/idle-timeout)](https://www.npmjs.com/package/idle-timeout/)
 [![Size](https://badgen.net/bundlephobia/min/idle-timeout)](https://bundlephobia.com/result?p=idle-timeout)
-[![License](https://badgen.net/npm/license/idle-timeout)](https://github.com/jackmu95/idle-timeout/blob/master/LICENSE)
+[![License](https://badgen.net/npm/license/idle-timeout)](https://github.com/jacobmllr95/idle-timeout/blob/master/LICENSE)
 
 A zero dependency, ~3KB library to make idle state detection in the browser an ease. With it's simple but yet powerful API it features everything you will ever need.
 
@@ -44,7 +44,7 @@ The idleTimeout constructor takes two arguments:
 - `options [Object]` - _An **optional** options object_
   - `element [Element]` - _The element to listen for the timeout_
   - `timeout [Number]` - _The idle timeout (in milliseconds)_
-  - `loop [Boolean]` - _Wether the timeout should be looped when idle_
+  - `loop [Boolean]` - _Whether the timeout should be looped when idle_
 
 ```javascript
 const instance = idleTimeout(
@@ -87,7 +87,7 @@ instance.destroy();
 
 ### Getters
 
-`idle [Boolean]` - _Wether the current state is idle_
+`idle [Boolean]` - _Whether the current state is idle_
 
 ```javascript
 instance.idle; // false
@@ -101,7 +101,7 @@ instance.idle; // false
 instance.timeout = 1000 * 60;
 ```
 
-`loop = value [Boolean]` - _Set wether the timeout should be looped_
+`loop = value [Boolean]` - _Set whether the timeout should be looped_
 
 ```javascript
 instance.loop = true;

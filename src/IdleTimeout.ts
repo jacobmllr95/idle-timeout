@@ -1,12 +1,12 @@
-import OptionsInterface from './interfaces/Options';
+import { Options } from './types';
 
 /** Creates an idle timeout instance. */
-export default class IdleTimeout {
+export class IdleTimeout {
   /** The callback function to invoke when the timeout is complete. */
   protected callback: (element: HTMLElement) => void;
 
   /** The merged configuration options for the timeout. */
-  protected options: OptionsInterface;
+  protected options: Options;
 
   /** The timeout handle to reset the timeout. */
   protected timeoutHandle: number | null = null;
@@ -46,7 +46,7 @@ export default class IdleTimeout {
    * @param {object} [options] The configuration options for the timeout.
    * @returns {void}
    */
-  public constructor(callback: (element: HTMLElement) => void, options?: OptionsInterface) {
+  public constructor(callback: (element: HTMLElement) => void, options?: Options) {
     this.callback = callback;
     this.options = {
       element: document.body,
