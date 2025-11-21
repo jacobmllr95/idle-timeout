@@ -1,11 +1,11 @@
 .cache/
 dist/
 node_modules/
-yarn-error.log
 
-# Playwright
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
-/playwright/.auth/
+# Tests
+blob-report/
+coverage/
+playwright-report/
+playwright/.auth/
+playwright/.cache/
+test-results/

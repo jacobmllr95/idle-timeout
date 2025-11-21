@@ -3,7 +3,7 @@ import { Options, UserOptions } from './types';
 /** Creates an idle timeout instance. */
 export class IdleTimeout {
   /** The callback function to invoke when the timeout is complete. */
-  protected callback: (element: HTMLElement) => void;
+  protected callback: (element: HTMLElement, timeout?: number) => void;
 
   /** The merged configuration options for the timeout. */
   protected options: Options;
@@ -46,7 +46,10 @@ export class IdleTimeout {
    * @param {object} [options] The configuration options for the timeout.
    * @returns {void}
    */
-  public constructor(callback: (element: HTMLElement) => void, options?: UserOptions) {
+  public constructor(
+    callback: (element: HTMLElement, timeout?: number) => void,
+    options?: UserOptions
+  ) {
     this.callback = callback;
     this.options = {
       element: options?.element ?? document.body,
@@ -175,7 +178,7 @@ export class IdleTimeout {
     this.isIdle = true;
     this.resetTimeout();
 
-    this.callback(this.options.element);
+    this.callback(this.options.element, this.options.timeout);
   }
 
   /** Gets whether the timeout is idle. */

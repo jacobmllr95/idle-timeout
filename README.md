@@ -40,7 +40,7 @@ yarn add idle-timeout
 import idleTimeout from 'idle-timeout';
 
 idleTimeout(() => {
-  console.log('Idle statet detected.');
+  console.log('Idle state detected.');
 });
 ```
 
@@ -49,7 +49,9 @@ idleTimeout(() => {
 The `idleTimeout` constructor takes two arguments:
 
 - `callback [Function]` - _The callback function_
-  - `element [Element]` - _The element that was listened for the timeout_
+- `callback [Function]` - _The callback function (receives `element` and `timeout` as arguments)_
+- `element [Element]` - _The element that was listened for the timeout_
+- `timeout [Number]` - _The current timeout value in milliseconds_
 - `options [Object]` - _An **optional** options object_
   - `element [Element]` - _The element to listen for the timeout_
   - `timeout [Number]` - _The idle timeout (in milliseconds)_
@@ -57,8 +59,8 @@ The `idleTimeout` constructor takes two arguments:
 
 ```js
 const instance = idleTimeout(
-  (element) => {
-    // Idle callback
+  (element, timeout) => {
+    console.log(`Idle state detected on ${element} after ${timeout} ms`);
   },
   {
     element: document,
