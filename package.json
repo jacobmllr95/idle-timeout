@@ -1,6 +1,6 @@
 {
   "name": "idle-timeout",
-  "version": "2.2.1",
+  "version": "2.3.0",
   "description": "The minimal idle state detector.",
   "repository": "jacobmllr95/idle-timeout",
   "index": "src/index.ts",
