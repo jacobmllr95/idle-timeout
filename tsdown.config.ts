@@ -10,10 +10,6 @@ const toCamelCase = (value: string) => {
   return value.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (_, chr) => chr.toUpperCase());
 };
 
-/**
- * Generates the output filename without extension.
- * e.g., "my-lib.esm.min"
- */
 const getEntryAlias = (baseName: string, format: Format, minify: boolean) => {
   const formatSuffix = format === 'umd' ? null : format;
   const minSuffix = minify ? 'min' : null;
