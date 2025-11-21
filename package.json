@@ -27,7 +27,7 @@
     "watch": "tsdown --watch",
     "lint": "eslint 'src/**/*.ts'",
     "prettify": "prettier --write '**/*.{md,ts}'",
-    "prepare": "npm run build"
+    "prepare": "tsdown"
   },
   "devDependencies": {
     "eslint": "^9.39.0",
