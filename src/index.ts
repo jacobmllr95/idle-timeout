@@ -1,7 +1,7 @@
 import { IdleTimeout } from './IdleTimeout';
-import { Options } from './types';
+import { UserOptions } from './types';
 
-const idleTimeout = (callback: () => void, options?: Options | undefined): IdleTimeout =>
+const idleTimeout = (callback: () => void, options?: UserOptions): IdleTimeout =>
   new IdleTimeout(callback, options);
 
 export default idleTimeout;
