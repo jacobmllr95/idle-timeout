@@ -29,7 +29,7 @@ yarn add idle-timeout
 ### Using CDN
 
 ```html
-<script src="https://unpkg.com/idle-timeout/dist/idle-timeout.min.js"></script>
+<script src="https://unpkg.com/idle-timeout/dist/idle-timeout.min.umd.js"></script>
 ```
 
 ## Usage
