@@ -3,9 +3,18 @@
   "version": "2.1.1",
   "description": "A basic idle state detector written in ES6.",
   "repository": "jacobmllr95/idle-timeout",
-  "index": "src/index.ts",
-  "main": "dist/idle-timeout.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/idle-timeout.cjs.js",
+  "module": "./dist/idle-timeout.esm.js",
+  "types": "./dist/idle-timeout.esm.d.ts",
+  "unpkg": "./dist/idle-timeout.min.js",
+  "exports": {
+    ".": {
+      "types": "./dist/idle-timeout.esm.d.ts",
+      "import": "./dist/idle-timeout.esm.js",
+      "require": "./dist/idle-timeout.cjs.js"
+    },
+    "./package.json": "./package.json"
+  },
   "license": "MIT",
   "maintainers": [
     {
