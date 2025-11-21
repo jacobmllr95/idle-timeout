@@ -1,11 +1,13 @@
-/** Configuration options for the timeout. */
-export interface Options {
+/** Configuration options for the idle timeout. */
+export interface UserOptions {
   /** The element to listen for the timeout. */
-  element: HTMLElement;
+  element?: HTMLElement;
 
   /** Wether the timeout should restart on completion. */
-  loop: boolean;
+  loop?: boolean;
 
   /** The idle timeout in milliseconds. */
-  timeout: number;
+  timeout?: number;
 }
+
+export type Options = Required<UserOptions>;

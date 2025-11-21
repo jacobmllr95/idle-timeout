@@ -1,4 +1,4 @@
-import { Options } from './types';
+import { Options, UserOptions } from './types';
 
 /** Creates an idle timeout instance. */
 export class IdleTimeout {
@@ -46,13 +46,12 @@ export class IdleTimeout {
    * @param {object} [options] The configuration options for the timeout.
    * @returns {void}
    */
-  public constructor(callback: (element: HTMLElement) => void, options?: Options) {
+  public constructor(callback: (element: HTMLElement) => void, options?: UserOptions) {
     this.callback = callback;
     this.options = {
-      element: document.body,
-      loop: false,
-      timeout: 60 * 1000 * 5, // 5 minutes
-      ...options
+      element: options?.element ?? document.body,
+      loop: options?.loop ?? false,
+      timeout: options?.timeout ?? 60 * 1000 * 5 // 5 minutes
     };
 
     const element = this.options.element;
