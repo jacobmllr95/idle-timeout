@@ -1,8 +1,8 @@
-import { defineConfig } from 'tsdown';
-import type { Format, UserConfig } from 'tsdown';
+import pkg from './package.json' with { type: 'json' };
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import pkg from './package.json' with { type: 'json' };
+import { defineConfig } from 'tsdown';
+import type { Format, UserConfig } from 'tsdown';
 
 // --- Helper methods ---
 
@@ -31,7 +31,7 @@ const CURRENT_YEAR = new Date().getFullYear();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const BASE_PATH = path.resolve(__dirname);
+const BASE_PATH = __dirname;
 const DIST_PATH = path.resolve(BASE_PATH, 'dist');
 const INPUT_PATH = path.resolve(BASE_PATH, pkg.index);
 

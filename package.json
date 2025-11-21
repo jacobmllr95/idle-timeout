@@ -3,6 +3,7 @@
   "version": "2.1.1",
   "description": "A basic idle state detector written in ES6.",
   "repository": "jacobmllr95/idle-timeout",
+  "index": "src/index.ts",
   "main": "./dist/idle-timeout.cjs.js",
   "module": "./dist/idle-timeout.esm.js",
   "types": "./dist/idle-timeout.esm.d.ts",
@@ -27,7 +28,7 @@
     "watch": "tsdown --watch",
     "lint": "eslint 'src/**/*.ts'",
     "prettify": "prettier --write '**/*.{md,ts}'",
-    "prepare": "tsdown"
+    "prepare": "npm run build"
   },
   "devDependencies": {
     "eslint": "^9.39.0",
