@@ -5,13 +5,13 @@
   "repository": "jacobmllr95/idle-timeout",
   "index": "src/index.ts",
   "main": "./dist/idle-timeout.cjs.js",
-  "module": "./dist/idle-timeout.esm.js",
-  "types": "./dist/idle-timeout.esm.d.ts",
-  "unpkg": "./dist/idle-timeout.min.js",
+  "module": "./dist/idle-timeout.esm.mjs",
+  "types": "./dist/idle-timeout.esm.d.mts",
+  "unpkg": "./dist/idle-timeout.min.umd.js",
   "exports": {
     ".": {
-      "types": "./dist/idle-timeout.esm.d.ts",
-      "import": "./dist/idle-timeout.esm.js",
+      "types": "./dist/idle-timeout.esm.d.mts",
+      "import": "./dist/idle-timeout.esm.mjs",
       "require": "./dist/idle-timeout.cjs.js"
     },
     "./package.json": "./package.json"
