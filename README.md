@@ -2,7 +2,7 @@
 
 [![Version](https://badgen.net/npm/v/idle-timeout)](https://www.npmjs.com/package/idle-timeout/)
 [![Size](https://badgen.net/bundlephobia/min/idle-timeout)](https://bundlephobia.com/package/idle-timeout@latest)
-[![License](https://badgen.net/npm/license/idle-timeout)](https://github.com/jacobmllr95/idle-timeout/blob/master/LICENSE)
+[![License](https://badgen.net/npm/license/idle-timeout)](https://github.com/jacobmllr95/idle-timeout/blob/main/README.md)
 
 A zero dependency, ~3KB library to make idle state detection in the browser an ease. With it's simple but yet powerful API it features everything you will ever need.
 
