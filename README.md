@@ -48,10 +48,9 @@ idleTimeout(() => {
 
 The `idleTimeout` constructor takes two arguments:
 
-- `callback [Function]` - _The callback function_
 - `callback [Function]` - _The callback function (receives `element` and `timeout` as arguments)_
-- `element [Element]` - _The element that was listened for the timeout_
-- `timeout [Number]` - _The current timeout value in milliseconds_
+  - `element [Element]` - _The element that was listened for the timeout_
+  - `timeout [Number]` - _The current timeout value in milliseconds_
 - `options [Object]` - _An **optional** options object_
   - `element [Element]` - _The element to listen for the timeout_
   - `timeout [Number]` - _The idle timeout (in milliseconds)_
