@@ -32,6 +32,7 @@ const DIST_PATH = path.resolve(BASE_PATH, 'dist');
 const INPUT_PATH = path.resolve(BASE_PATH, pkg.index);
 
 const PLATFORM = 'browser';
+const TARGET = 'es2018';
 const FORMATS: Format[] = ['cjs', 'esm', 'umd'];
 
 const BANNER_TEXT = `/*! ${LIBRARY_NAME} v${VERSION} | Copyright (c) 2016-${CURRENT_YEAR} Jacob Müller */`;
@@ -50,6 +51,7 @@ const createConfig = (
     entry: { [alias]: INPUT_PATH },
     outDir: DIST_PATH,
     platform: PLATFORM,
+    target: TARGET,
     format,
     minify,
     sourcemap: true,
