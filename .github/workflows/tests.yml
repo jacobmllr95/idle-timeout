@@ -2,9 +2,9 @@ name: Unit Tests
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
-    branches: [main, master]
+    branches: [main]
 
 jobs:
   unit-tests:
@@ -30,9 +30,7 @@ jobs:
       - name: Run Unit Tests with Coverage
         run: pnpm test:coverage
 
-      - uses: actions/upload-artifact@v5
-        if: always()
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
         with:
-          name: coverage-report
-          path: coverage/
-          retention-days: 30
+          token: ${{ secrets.CODECOV_TOKEN }}
