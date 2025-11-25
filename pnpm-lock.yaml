@@ -9,49 +9,49 @@ importers:
   .:
     devDependencies:
       '@eslint/js':
-        specifier: ^9.39.0
+        specifier: ^9.39.1
         version: 9.39.1
       '@playwright/test':
-        specifier: ^1.56.0
+        specifier: ^1.57.0
         version: 1.57.0
       '@types/node':
-        specifier: ^24.10.0
+        specifier: ^24.10.1
         version: 24.10.1
       '@vitest/coverage-v8':
-        specifier: ^4.0.0
+        specifier: ^4.0.14
         version: 4.0.14(vitest@4.0.14(@types/node@24.10.1)(jsdom@27.2.0))
       eslint:
-        specifier: ^9.39.0
+        specifier: ^9.39.1
         version: 9.39.1
       eslint-config-prettier:
-        specifier: ^10.1.0
+        specifier: ^10.1.8
         version: 10.1.8(eslint@9.39.1)
       globals:
         specifier: ^16.5.0
         version: 16.5.0
       husky:
-        specifier: ^9.1.0
+        specifier: ^9.1.7
         version: 9.1.7
       jsdom:
         specifier: ^27.2.0
         version: 27.2.0
       prettier:
-        specifier: ^3.6.0
+        specifier: ^3.6.2
         version: 3.6.2
       pretty-quick:
-        specifier: ^4.2.0
+        specifier: ^4.2.2
         version: 4.2.2(prettier@3.6.2)
       tsdown:
-        specifier: ^0.16.0
+        specifier: ^0.16.7
         version: 0.16.7(typescript@5.9.3)
       typescript:
-        specifier: ^5.9.0
+        specifier: ^5.9.3
         version: 5.9.3
       typescript-eslint:
-        specifier: ^8.47.0
+        specifier: ^8.48.0
         version: 8.48.0(eslint@9.39.1)(typescript@5.9.3)
       vitest:
-        specifier: ^4.0.13
+        specifier: ^4.0.14
         version: 4.0.14(@types/node@24.10.1)(jsdom@27.2.0)
 
 packages:
