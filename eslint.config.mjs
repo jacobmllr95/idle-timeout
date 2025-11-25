@@ -2,9 +2,10 @@ import eslint from '@eslint/js';
 import globals from 'globals';
 import prettierConfig from 'eslint-config-prettier';
 import tsEslint from 'typescript-eslint';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig(
+  globalIgnores(['./dist/']),
   eslint.configs.recommended,
   tsEslint.configs.recommended,
   {
@@ -14,8 +15,7 @@ export default defineConfig(
         ...globals.browser,
         ...globals.es6
       }
-    },
-    ignores: ['dist/*']
+    }
   },
   prettierConfig
 );
