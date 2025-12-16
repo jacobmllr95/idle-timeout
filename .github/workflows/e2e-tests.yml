@@ -8,15 +8,10 @@ on:
 
 jobs:
   e2e-tests:
-    name: e2e Tests (${{ matrix.project }})
+    name: e2e Tests
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.57.0-jammy
-    strategy:
-      fail-fast: false
-      matrix:
-        # Need to keep in sync with projects defined in "playwright.config.ts".
-        project: [chromium, firefox, webkit, 'Mobile Chrome', 'Mobile Safari']
     steps:
       - uses: actions/checkout@v6
 
@@ -35,11 +30,11 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Run e2e Tests
-        run: pnpm test:e2e -- --project="${{ matrix.project }}"
+        run: pnpm test:e2e
 
       - uses: actions/upload-artifact@v5
         if: ${{ !cancelled() }}
         with:
-          name: playwright-report-${{ matrix.project }}
+          name: playwright-report
           path: playwright-report/
           retention-days: 30
