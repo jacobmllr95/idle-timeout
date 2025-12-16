@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.57.0-jammy
+      env:
+        HOME: /root
     steps:
       - uses: actions/checkout@v6
 
