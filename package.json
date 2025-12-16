@@ -35,21 +35,21 @@
     "prepare": "npm run build"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
+    "@eslint/js": "^9.39.2",
     "@playwright/test": "^1.57.0",
-    "@types/node": "^24.10.1",
-    "@vitest/coverage-v8": "^4.0.14",
-    "eslint": "^9.39.1",
+    "@types/node": "^24.10.4",
+    "@vitest/coverage-v8": "^4.0.16",
+    "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^16.5.0",
     "husky": "^9.1.7",
-    "jsdom": "^27.2.0",
-    "prettier": "^3.6.2",
+    "jsdom": "^27.3.0",
+    "prettier": "^3.7.4",
     "pretty-quick": "^4.2.2",
-    "tsdown": "^0.16.7",
+    "tsdown": "^0.18.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.48.0",
-    "vitest": "^4.0.14"
+    "typescript-eslint": "^8.50.0",
+    "vitest": "^4.0.16"
   },
   "files": [
     "dist",
