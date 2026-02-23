@@ -11,7 +11,7 @@ jobs:
     name: e2e Tests
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.57.0-jammy
+      image: mcr.microsoft.com/playwright:v1.58.2-jammy
       env:
         HOME: /root
     steps:
