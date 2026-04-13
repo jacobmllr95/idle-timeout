@@ -36,20 +36,20 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@playwright/test": "^1.58.2",
-    "@types/node": "^25.3.0",
-    "@vitest/coverage-v8": "^4.0.18",
-    "eslint": "^10.0.1",
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0",
+    "@vitest/coverage-v8": "^4.1.4",
+    "eslint": "^10.2.0",
     "eslint-config-prettier": "^10.1.8",
-    "globals": "^17.3.0",
+    "globals": "^17.5.0",
     "husky": "^9.1.7",
     "jsdom": "^28.1.0",
-    "prettier": "^3.8.1",
+    "prettier": "^3.8.2",
     "pretty-quick": "^4.2.2",
     "tsdown": "0.20.3",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.56.0",
-    "vitest": "^4.0.18"
+    "typescript-eslint": "^8.58.1",
+    "vitest": "^4.1.4"
   },
   "files": [
     "dist",
