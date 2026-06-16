@@ -5,7 +5,7 @@
 [![Coverage](https://img.shields.io/codecov/c/github/jacobmllr95/idle-timeout)](https://app.codecov.io/github/jacobmllr95/idle-timeout)
 [![License](https://img.shields.io/npm/l/idle-timeout)](https://github.com/jacobmllr95/idle-timeout/blob/main/README.md)
 
-A zero dependency, ~3KB library to make idle state detection in the browser an ease. With it's simple but yet powerful API it features everything you will ever need.
+A zero dependency, ~3KB library that makes idle state detection in the browser easy. With its simple but powerful API, it includes everything you need.
 
 ## Installation
 
@@ -35,7 +35,7 @@ yarn add idle-timeout
 
 ## Usage
 
-`idleTimeout` is totally easy to use. All you need to do is:
+`idleTimeout` is easy to use:
 
 ```js
 import idleTimeout from 'idle-timeout';
@@ -50,10 +50,10 @@ idleTimeout(() => {
 The `idleTimeout` constructor takes two arguments:
 
 - `callback [Function]` - _The callback function (receives `element` and `timeout` as arguments)_
-  - `element [Element]` - _The element that was listened for the timeout_
+  - `element [Document | HTMLElement]` - _The element being monitored for activity_
   - `timeout [Number]` - _The current timeout value in milliseconds_
 - `options [Object]` - _An **optional** options object_
-  - `element [Element]` - _The element to listen for the timeout_
+  - `element [Document | HTMLElement]` - _The element to monitor for activity_
   - `timeout [Number]` - _The idle timeout (in milliseconds)_
   - `loop [Boolean]` - _Whether the timeout should be looped when idle_
 
@@ -78,19 +78,19 @@ const instance = idleTimeout(
 instance.pause();
 ```
 
-`resume()` - _Resumes an paused timeout_
+`resume()` - _Resumes a paused timeout_
 
 ```js
 instance.resume();
 ```
 
-`reset()` - _Reset the timeout_
+`reset()` - _Resets the timeout_
 
 ```js
 instance.reset();
 ```
 
-`destroy()` - _Destroy the instance_
+`destroy()` - _Destroys the instance_
 
 ```js
 instance.destroy();
@@ -106,7 +106,7 @@ instance.idle; // false
 
 ### Setters
 
-`timeout = value [Number]` - _Set the timeout (in milliseconds)_
+`timeout = value [Number]` - _Sets the timeout (in milliseconds)_
 
 ```js
 instance.timeout = 1000 * 60;

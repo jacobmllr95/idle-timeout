@@ -54,6 +54,18 @@ Before opening or updating a pull request, please make sure:
 - Dependency changes are intentional and reflected in `pnpm-lock.yaml`.
 - Public API changes are documented in `README.md`.
 
+## Commit Messages
+
+Use short, focused commit messages that follow the existing Conventional Commit style:
+
+- `fix: handle destroyed timeout instances`
+- `feat: add browser activity option`
+- `docs: clarify release process`
+- `chore: update package metadata`
+- `chore(deps): bump vitest`
+
+Prefer `fix` for bug fixes, `feat` for user-facing API additions, `docs` for documentation-only changes, and `chore` for maintenance that does not change the runtime API.
+
 ## Reporting Bugs
 
 Bug reports are most helpful when they include:
