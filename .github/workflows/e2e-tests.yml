@@ -6,39 +6,54 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   e2e-tests:
     name: e2e Tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     container:
-      image: mcr.microsoft.com/playwright:v1.59.1-jammy
+      image: mcr.microsoft.com/playwright:v1.61.0-noble@sha256:57b65fdc9ceabe0ef613124c7bbe2babcf9362c4d85e382fe3b03604e84b428a
       env:
         HOME: /root
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+        with:
+          persist-credentials: false
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
         with:
-          version: 9
+          version: 10.34.1
+          run_install: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
         with:
-          node-version: 'lts/*'
-          cache: 'pnpm'
+          node-version: '24.x'
+          cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --strict-peer-dependencies
+
+      - name: Audit dependencies
+        run: pnpm audit --audit-level moderate
+
+      - name: Verify package signatures
+        run: npm audit signatures
 
       - name: Run e2e Tests
         run: pnpm test:e2e
         env:
           HOME: /root
 
-      - uses: actions/upload-artifact@v5
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
           path: playwright-report/
-          retention-days: 30
+          retention-days: 14
+          if-no-files-found: ignore
