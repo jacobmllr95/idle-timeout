@@ -1,0 +1,35 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Europe/Berlin
+    open-pull-requests-limit: 5
+    groups:
+      test-tooling:
+        patterns:
+          - '@playwright/*'
+          - '@vitest/*'
+          - vitest
+          - jsdom
+      lint-format-build:
+        patterns:
+          - '@eslint/*'
+          - eslint
+          - eslint-config-prettier
+          - prettier
+          - typescript-eslint
+          - tsdown
+          - typescript
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:15'
+      timezone: Europe/Berlin
+    open-pull-requests-limit: 5
