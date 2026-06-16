@@ -1,9 +1,9 @@
-import { Options, UserOptions } from './types';
+import { Options, TimeoutCallback, UserOptions } from './types';
 
 /** Creates an idle timeout instance. */
 export class IdleTimeout {
   /** The callback function to invoke when the timeout is complete. */
-  protected callback: (element: HTMLElement, timeout?: number) => void;
+  protected callback: TimeoutCallback;
 
   /** The merged configuration options for the timeout. */
   protected options: Options;
@@ -13,6 +13,9 @@ export class IdleTimeout {
 
   /** Whether the timeout is idle. */
   protected isIdle: boolean = false;
+
+  /** Whether the timeout instance has been destroyed. */
+  protected isDestroyed: boolean = false;
 
   /** The start time of the timeout in milliseconds. */
   protected startTime: number = 0;
@@ -47,7 +50,7 @@ export class IdleTimeout {
    * @returns {void}
    */
   public constructor(
-    callback: (element: HTMLElement, timeout?: number) => void,
+    callback: TimeoutCallback,
     options?: UserOptions
   ) {
     this.callback = callback;
@@ -71,6 +74,10 @@ export class IdleTimeout {
    * @returns {void}
    */
   public pause(): void {
+    if (this.isDestroyed) {
+      return;
+    }
+
     const remainingTime: number = this.startTime + this.options.timeout - new Date().getTime();
     if (remainingTime <= 0) {
       return;
@@ -89,6 +96,10 @@ export class IdleTimeout {
    * @returns {void}
    */
   public resume(): void {
+    if (this.isDestroyed) {
+      return;
+    }
+
     if (this.remainingTime <= 0) {
       return;
     }
@@ -102,6 +113,10 @@ export class IdleTimeout {
    * @returns {void}
    */
   public reset(): void {
+    if (this.isDestroyed) {
+      return;
+    }
+
     this.isIdle = false;
     this.remainingTime = 0;
     this.resetTimeout();
@@ -112,6 +127,10 @@ export class IdleTimeout {
    * @returns {void}
    */
   public destroy(): void {
+    if (this.isDestroyed) {
+      return;
+    }
+
     const element = this.options.element;
 
     this.eventNames.forEach((eventName): void => {
@@ -120,7 +139,10 @@ export class IdleTimeout {
 
     if (this.timeoutHandle) {
       window.clearTimeout(this.timeoutHandle);
+      this.timeoutHandle = null;
     }
+
+    this.isDestroyed = true;
   }
 
   /**
@@ -128,6 +150,10 @@ export class IdleTimeout {
    * @returns {void}
    */
   protected resetTimeout(): void {
+    if (this.isDestroyed) {
+      return;
+    }
+
     if (this.timeoutHandle) {
       window.clearTimeout(this.timeoutHandle);
       this.timeoutHandle = null;
@@ -150,6 +176,10 @@ export class IdleTimeout {
    * @returns {void}
    */
   protected handleEvent = (event: Event): void => {
+    if (this.isDestroyed) {
+      return;
+    }
+
     if (this.remainingTime > 0) {
       return;
     }
@@ -175,6 +205,10 @@ export class IdleTimeout {
    * @returns {void}
    */
   protected handleTimeout(): void {
+    if (this.isDestroyed) {
+      return;
+    }
+
     this.isIdle = true;
     this.resetTimeout();
 
@@ -187,8 +221,8 @@ export class IdleTimeout {
   }
 
   /**
-   * Sets wether the timeout should restart on completion.
-   * @param {boolean} value Wether the timeout should restart on completion.
+   * Sets whether the timeout should restart on completion.
+   * @param {boolean} value Whether the timeout should restart on completion.
    */
   public set loop(value: boolean) {
     this.options.loop = value;
@@ -200,6 +234,8 @@ export class IdleTimeout {
    */
   public set timeout(value: number) {
     this.options.timeout = value;
+    this.remainingTime = 0;
+    this.resetTimeout();
   }
 
   /**
@@ -207,6 +243,10 @@ export class IdleTimeout {
    * @param {boolean} value Whether the timeout is idle.
    */
   public set idle(value: boolean) {
+    if (this.isDestroyed) {
+      return;
+    }
+
     if (value) {
       this.handleTimeout();
     } else {

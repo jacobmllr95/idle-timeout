@@ -1,9 +1,7 @@
 import { IdleTimeout } from './IdleTimeout';
-import { UserOptions } from './types';
+import { TimeoutCallback, UserOptions } from './types';
 
-const idleTimeout = (
-  callback: (element: HTMLElement, timeout?: number) => void,
-  options?: UserOptions
-): IdleTimeout => new IdleTimeout(callback, options);
+const idleTimeout = (callback: TimeoutCallback, options?: UserOptions): IdleTimeout =>
+  new IdleTimeout(callback, options);
 
 export default idleTimeout;

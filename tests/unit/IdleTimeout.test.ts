@@ -223,6 +223,19 @@ describe('IdleTimeout class', () => {
     expect((idle as any).options.timeout).toBe(12345);
   });
 
+  it('should restart the active timer when setting "timeout"', () => {
+    const cb = vi.fn();
+    const idle = new IdleTimeout(cb, { timeout: 1000 });
+
+    vi.advanceTimersByTime(500);
+    idle.timeout = 200;
+    vi.advanceTimersByTime(199);
+    expect(cb).not.toHaveBeenCalled();
+
+    vi.advanceTimersByTime(1);
+    expect(cb).toHaveBeenCalledTimes(1);
+  });
+
   it('should clear existing timeout handle when resetting', () => {
     const cb = vi.fn();
     const idle = new IdleTimeout(cb, { timeout: 1000 });
@@ -303,6 +316,24 @@ describe('IdleTimeout class', () => {
     idle.destroy();
     expect(spy).not.toHaveBeenCalled();
     spy.mockRestore();
+  });
+
+  it('should not restart or trigger after destroy', () => {
+    const cb = vi.fn();
+    const idle = new IdleTimeout(cb, { timeout: 100 });
+
+    idle.destroy();
+    idle.pause();
+    idle.reset();
+    idle.resume();
+    idle.timeout = 50;
+    idle.idle = true;
+    idle.destroy();
+    (idle as any).handleEvent(new KeyboardEvent('keydown'));
+    (idle as any).handleTimeout();
+
+    vi.advanceTimersByTime(100);
+    expect(cb).not.toHaveBeenCalled();
   });
 
   it('should treat "mousemove" with one "undefined" coordinate as activity', () => {
