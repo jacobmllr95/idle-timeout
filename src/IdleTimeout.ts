@@ -185,7 +185,11 @@ export class IdleTimeout {
     }
 
     if (event.type === 'mousemove') {
-      const { pageX, pageY } = event as MouseEvent;
+      if (!(event instanceof MouseEvent)) {
+        return;
+      }
+
+      const { pageX, pageY } = event;
       if (
         (pageX === undefined && pageY === undefined) ||
         (pageX === this.lastPageX && pageY === this.lastPageY)
