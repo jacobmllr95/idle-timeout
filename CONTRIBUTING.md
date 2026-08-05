@@ -18,8 +18,8 @@ This project uses Node.js and pnpm.
 
 Requirements:
 
-- Node.js `>=22.14.0`
-- pnpm `10.34.1`
+- Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`
+- pnpm `10.34.5`
 
 Setup:
 
@@ -30,11 +30,18 @@ pnpm install
 Useful commands:
 
 ```bash
+pnpm typecheck
 pnpm lint
+pnpm format:check
 pnpm test
 pnpm test:coverage
 pnpm build
 ```
+
+`pnpm typecheck` uses the native TypeScript 7 compiler.
+
+Oxlint enforces correctness, suspicious-code, and type-aware rules from `.oxlintrc.json`.
+Prettier is the only tool responsible for formatting, so lint and formatting rules do not overlap.
 
 For browser tests, install the Playwright browsers once:
 
@@ -48,7 +55,9 @@ pnpm test:e2e
 Before opening or updating a pull request, please make sure:
 
 - The change is covered by unit tests or e2e tests when behavior changes.
+- `pnpm typecheck` passes.
 - `pnpm lint` passes.
+- `pnpm format:check` passes.
 - `pnpm test:coverage` passes.
 - `pnpm build` passes.
 - Dependency changes are intentional and reflected in `pnpm-lock.yaml`.

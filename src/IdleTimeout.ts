@@ -49,10 +49,7 @@ export class IdleTimeout {
    * @param {object} [options] The configuration options for the timeout.
    * @returns {void}
    */
-  public constructor(
-    callback: TimeoutCallback,
-    options?: UserOptions
-  ) {
+  public constructor(callback: TimeoutCallback, options?: UserOptions) {
     this.callback = callback;
     this.options = {
       element: options?.element ?? document.body,
