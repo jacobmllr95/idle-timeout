@@ -17,11 +17,9 @@ updates:
           - jsdom
       lint-format-build:
         patterns:
-          - '@eslint/*'
-          - eslint
-          - eslint-config-prettier
+          - oxlint
+          - oxlint-tsgolint
           - prettier
-          - typescript-eslint
           - tsdown
           - typescript
 
