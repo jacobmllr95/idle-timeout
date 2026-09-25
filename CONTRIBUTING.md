@@ -19,7 +19,7 @@ This project uses Node.js and pnpm.
 Requirements:
 
 - Node.js `^22.22.2 || ^24.15.0 || >=26.0.0`
-- pnpm `10.34.5`
+- pnpm `12.6.0`
 
 Setup:
 
