@@ -12,6 +12,34 @@ describe('IdleTimeout class', () => {
     document.body.innerHTML = '';
   });
 
+  it.each([
+    'DOMMouseScroll',
+    'mousedown',
+    'mousemove',
+    'mousewheel',
+    'MSPointerDown',
+    'MSPointerMove',
+    'keydown',
+    'touchmove',
+    'touchstart',
+    'wheel'
+  ])('resets on %s and removes its listener on destroy', (eventName) => {
+    const element = document.createElement('div');
+    const callback = vi.fn();
+    const removeListener = vi.spyOn(element, 'removeEventListener');
+    const idle = new IdleTimeout(callback, { element, timeout: 1000 });
+
+    vi.advanceTimersByTime(500);
+    element.dispatchEvent(new MouseEvent(eventName, { clientX: 10, clientY: 20 }));
+    vi.advanceTimersByTime(999);
+    expect(callback).not.toHaveBeenCalled();
+    vi.advanceTimersByTime(1);
+    expect(callback).toHaveBeenCalledExactlyOnceWith(element, 1000);
+
+    idle.destroy();
+    expect(removeListener).toHaveBeenCalledWith(eventName, expect.any(Function));
+  });
+
   it('should register event listeners and use default "element" when none provided', () => {
     const el = document.createElement('div');
     document.body.appendChild(el);

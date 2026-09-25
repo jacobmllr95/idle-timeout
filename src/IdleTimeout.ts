@@ -59,9 +59,9 @@ export class IdleTimeout {
 
     const element = this.options.element;
 
-    this.eventNames.forEach((eventName): void => {
+    for (const eventName of this.eventNames) {
       element.addEventListener(eventName, this.handleEvent);
-    });
+    }
 
     this.resetTimeout();
   }
@@ -75,7 +75,7 @@ export class IdleTimeout {
       return;
     }
 
-    const remainingTime: number = this.startTime + this.options.timeout - new Date().getTime();
+    const remainingTime: number = this.startTime + this.options.timeout - Date.now();
     if (remainingTime <= 0) {
       return;
     }
@@ -130,9 +130,9 @@ export class IdleTimeout {
 
     const element = this.options.element;
 
-    this.eventNames.forEach((eventName): void => {
+    for (const eventName of this.eventNames) {
       element.removeEventListener(eventName, this.handleEvent);
-    });
+    }
 
     if (this.timeoutHandle) {
       window.clearTimeout(this.timeoutHandle);
@@ -164,7 +164,7 @@ export class IdleTimeout {
       this.handleTimeout();
     }, this.remainingTime || this.options.timeout);
 
-    this.startTime = new Date().getTime();
+    this.startTime = Date.now();
   }
 
   /**
