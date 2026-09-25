@@ -57,20 +57,18 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
-    "format:check": "prettier --check .",
-    "prettify": "prettier --write '**/*.{md,ts}'",
+    "format:check": "prettier --ignore-path .gitignore --ignore-path .prettierignore --check .",
+    "prettify": "prettier --ignore-path .gitignore --ignore-path .prettierignore --write .",
     "prepare": "npm run build"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
     "@types/node": "^26.6.2",
     "@vitest/coverage-v8": "^5.0.1",
-    "husky": "^9.1.7",
     "jsdom": "^30.1.1",
     "oxlint": "^1.85.0",
     "oxlint-tsgolint": "7.0.2003",
     "prettier": "^3.9.9",
-    "pretty-quick": "^4.2.2",
     "tsdown": "0.23.0",
     "typescript": "^7.0.2",
     "vitest": "^5.0.1"
@@ -78,10 +76,5 @@
   "files": [
     "dist",
     "src"
-  ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  }
+  ]
 }
