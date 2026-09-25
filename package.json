@@ -26,6 +26,9 @@
   "module": "./dist/idle-timeout.esm.mjs",
   "types": "./dist/idle-timeout.esm.d.mts",
   "unpkg": "./dist/idle-timeout.min.umd.js",
+  "sideEffects": [
+    "./dist/*.umd.js"
+  ],
   "publishConfig": {
     "access": "public",
     "provenance": true

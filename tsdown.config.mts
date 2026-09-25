@@ -55,6 +55,8 @@ const createConfig = (
     format,
     minify,
     sourcemap: true,
+    // Keep API documentation in declarations and sources, without repeating it in JS bundles.
+    outputOptions: { comments: { jsdoc: false } },
     clean,
     // Only generate types for non-minified builds to save time.
     dts: !minify,
