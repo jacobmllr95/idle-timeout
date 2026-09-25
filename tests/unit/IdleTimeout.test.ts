@@ -99,6 +99,85 @@ describe('IdleTimeout class', () => {
     expect(cb).toHaveBeenCalledTimes(1);
   });
 
+  it('preserves the remaining time when pause is called again while paused', () => {
+    const callback = vi.fn();
+    const element = document.createElement('div');
+    const idle = new IdleTimeout(callback, { element, timeout: 1000 });
+
+    vi.advanceTimersByTime(400);
+    idle.pause();
+    vi.advanceTimersByTime(200);
+    idle.pause();
+    vi.advanceTimersByTime(2000);
+    expect(callback).not.toHaveBeenCalled();
+
+    idle.resume();
+    vi.advanceTimersByTime(599);
+    expect(callback).not.toHaveBeenCalled();
+    vi.advanceTimersByTime(1);
+    expect(callback).toHaveBeenCalledExactlyOnceWith(element, 1000);
+
+    idle.destroy();
+  });
+
+  it.each([false, true])('preserves the countdown across multiple pauses with loop=%s', (loop) => {
+    const callback = vi.fn();
+    const element = document.createElement('div');
+    const idle = new IdleTimeout(callback, { element, timeout: 1000, loop });
+
+    vi.advanceTimersByTime(400);
+    idle.pause();
+    vi.advanceTimersByTime(1000);
+    idle.resume();
+    vi.advanceTimersByTime(200);
+    idle.pause();
+    vi.advanceTimersByTime(2000);
+    expect(callback).not.toHaveBeenCalled();
+
+    idle.resume();
+    vi.advanceTimersByTime(399);
+    expect(callback).not.toHaveBeenCalled();
+    vi.advanceTimersByTime(1);
+    expect(callback).toHaveBeenCalledExactlyOnceWith(element, 1000);
+
+    vi.advanceTimersByTime(999);
+    expect(callback).toHaveBeenCalledTimes(1);
+    vi.advanceTimersByTime(1);
+    expect(callback).toHaveBeenCalledTimes(loop ? 2 : 1);
+
+    idle.destroy();
+  });
+
+  it.each(['reset', 'timeout'])(
+    'starts a full countdown after %s interrupts a resumed and paused countdown',
+    (operation) => {
+      const callback = vi.fn();
+      const element = document.createElement('div');
+      const idle = new IdleTimeout(callback, { element, timeout: 1000 });
+
+      vi.advanceTimersByTime(400);
+      idle.pause();
+      vi.advanceTimersByTime(1000);
+      idle.resume();
+      vi.advanceTimersByTime(200);
+      idle.pause();
+
+      const timeout = operation === 'reset' ? 1000 : 2000;
+      if (operation === 'reset') {
+        idle.reset();
+      } else {
+        idle.timeout = timeout;
+      }
+
+      vi.advanceTimersByTime(timeout - 1);
+      expect(callback).not.toHaveBeenCalled();
+      vi.advanceTimersByTime(1);
+      expect(callback).toHaveBeenCalledExactlyOnceWith(element, timeout);
+
+      idle.destroy();
+    }
+  );
+
   it('should reset idle state and restart timeout', () => {
     const cb = vi.fn();
     const idle = new IdleTimeout(cb, { timeout: 200 });

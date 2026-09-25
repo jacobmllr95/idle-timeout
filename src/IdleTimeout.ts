@@ -71,7 +71,7 @@ export class IdleTimeout {
    * @returns {void}
    */
   public pause(): void {
-    if (this.isDestroyed) {
+    if (this.isDestroyed || this.remainingTime > 0) {
       return;
     }
 
@@ -102,6 +102,8 @@ export class IdleTimeout {
     }
 
     this.resetTimeout();
+    // Preserve elapsed active time so a later pause uses the remaining countdown.
+    this.startTime -= this.options.timeout - this.remainingTime;
     this.remainingTime = 0;
   }
 
