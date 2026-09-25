@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src", "tests", "scripts", "*.config.ts", "*.config.mts"],
+  "compilerOptions": {
+    "noEmit": true,
+    "allowJs": true,
+    "checkJs": true,
+    "resolveJsonModule": true
+  }
+}

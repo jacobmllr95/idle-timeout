@@ -1,5 +1,19 @@
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
 import { IdleTimeout } from '../../src/IdleTimeout';
+import type { Options } from '../../src/types';
+
+// Expose protected members for assertions without changing their runtime implementation.
+class TestIdleTimeout extends IdleTimeout {
+  declare options: Options;
+  declare timeoutHandle: number | null;
+  declare isIdle: boolean;
+  declare startTime: number;
+  declare remainingTime: number;
+  declare eventNames: string[];
+  declare resetTimeout: () => void;
+  declare handleTimeout: () => void;
+  declare handleEvent: (event: Event) => void;
+}
 
 describe('IdleTimeout class', () => {
   beforeEach(() => {
@@ -8,8 +22,10 @@ describe('IdleTimeout class', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
-    // Clean body
-    document.body.innerHTML = '';
+    vi.clearAllTimers();
+    vi.useRealTimers();
+    // Replacing the body also removes event listeners left by a test.
+    document.body.replaceWith(document.createElement('body'));
   });
 
   it.each([
@@ -27,7 +43,7 @@ describe('IdleTimeout class', () => {
     const element = document.createElement('div');
     const callback = vi.fn();
     const removeListener = vi.spyOn(element, 'removeEventListener');
-    const idle = new IdleTimeout(callback, { element, timeout: 1000 });
+    const idle = new TestIdleTimeout(callback, { element, timeout: 1000 });
 
     vi.advanceTimersByTime(500);
     element.dispatchEvent(new MouseEvent(eventName, { clientX: 10, clientY: 20 }));
@@ -45,17 +61,17 @@ describe('IdleTimeout class', () => {
     document.body.appendChild(el);
 
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb);
+    const idle = new TestIdleTimeout(cb);
 
     // Default element should be document.body
-    expect((idle as any).options.element).toBe(document.body);
+    expect(idle.options.element).toBe(document.body);
 
     // Create instance with a custom element
-    const idle2 = new IdleTimeout(cb, { element: el, timeout: 100 });
-    expect((idle2 as any).options.element).toBe(el);
+    const idle2 = new TestIdleTimeout(cb, { element: el, timeout: 100 });
+    expect(idle2.options.element).toBe(el);
 
     // Event listeners should be registered
-    const events = (idle2 as any).eventNames as string[];
+    const events = idle2.eventNames;
     events.forEach((ev) => {
       // There's no direct API to check listeners, but dispatching should not throw
       el.dispatchEvent(new Event(ev));
@@ -69,7 +85,7 @@ describe('IdleTimeout class', () => {
     document.body.appendChild(el);
 
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { element: el, timeout: 100 });
+    const idle = new TestIdleTimeout(cb, { element: el, timeout: 100 });
 
     vi.advanceTimersByTime(100);
     expect(cb).toHaveBeenCalledTimes(1);
@@ -81,7 +97,7 @@ describe('IdleTimeout class', () => {
     document.body.appendChild(el);
 
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { element: el, timeout: 1000 });
+    const idle = new TestIdleTimeout(cb, { element: el, timeout: 1000 });
 
     // Advance half the timeout
     vi.advanceTimersByTime(400);
@@ -102,7 +118,7 @@ describe('IdleTimeout class', () => {
   it('preserves the remaining time when pause is called again while paused', () => {
     const callback = vi.fn();
     const element = document.createElement('div');
-    const idle = new IdleTimeout(callback, { element, timeout: 1000 });
+    const idle = new TestIdleTimeout(callback, { element, timeout: 1000 });
 
     vi.advanceTimersByTime(400);
     idle.pause();
@@ -123,7 +139,7 @@ describe('IdleTimeout class', () => {
   it.each([false, true])('preserves the countdown across multiple pauses with loop=%s', (loop) => {
     const callback = vi.fn();
     const element = document.createElement('div');
-    const idle = new IdleTimeout(callback, { element, timeout: 1000, loop });
+    const idle = new TestIdleTimeout(callback, { element, timeout: 1000, loop });
 
     vi.advanceTimersByTime(400);
     idle.pause();
@@ -153,7 +169,7 @@ describe('IdleTimeout class', () => {
     (operation) => {
       const callback = vi.fn();
       const element = document.createElement('div');
-      const idle = new IdleTimeout(callback, { element, timeout: 1000 });
+      const idle = new TestIdleTimeout(callback, { element, timeout: 1000 });
 
       vi.advanceTimersByTime(400);
       idle.pause();
@@ -180,7 +196,7 @@ describe('IdleTimeout class', () => {
 
   it('should reset idle state and restart timeout', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 200 });
+    const idle = new TestIdleTimeout(cb, { timeout: 200 });
 
     vi.advanceTimersByTime(200);
     expect(cb).toHaveBeenCalledTimes(1);
@@ -199,7 +215,7 @@ describe('IdleTimeout class', () => {
     document.body.appendChild(el);
 
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { element: el, timeout: 1000 });
+    const idle = new TestIdleTimeout(cb, { element: el, timeout: 1000 });
 
     // Simulate event should reset timeout without errors
     el.dispatchEvent(new Event('mousemove'));
@@ -217,7 +233,7 @@ describe('IdleTimeout class', () => {
     document.body.appendChild(el);
 
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { element: el, timeout: 100 });
+    const idle = new TestIdleTimeout(cb, { element: el, timeout: 100 });
 
     // Dispatch "mousemove" with coordinates
     const m1 = new MouseEvent('mousemove', { bubbles: true });
@@ -235,11 +251,13 @@ describe('IdleTimeout class', () => {
     // Advance full timeout
     vi.advanceTimersByTime(100);
     expect(cb).toHaveBeenCalledTimes(1);
+
+    idle.destroy();
   });
 
   it('should call "callback" repeatedly when "loop" is "true"', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 100, loop: true });
+    const idle = new TestIdleTimeout(cb, { timeout: 100, loop: true });
 
     vi.advanceTimersByTime(100);
     expect(cb).toHaveBeenCalledTimes(1);
@@ -247,11 +265,13 @@ describe('IdleTimeout class', () => {
     // Because loop=true it should trigger again
     vi.advanceTimersByTime(100);
     expect(cb).toHaveBeenCalledTimes(2);
+
+    idle.destroy();
   });
 
   it('should trigger timeout when setting "idle=true" and reset when "idle=false"', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 500 });
+    const idle = new TestIdleTimeout(cb, { timeout: 500 });
 
     idle.idle = true;
     expect(cb).toHaveBeenCalledTimes(1);
@@ -264,12 +284,12 @@ describe('IdleTimeout class', () => {
 
   it('should ignore events when "remainingTime" greater than "0"', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 1000 });
+    const idle = new TestIdleTimeout(cb, { timeout: 1000 });
 
     // Simulate paused state
-    (idle as any).remainingTime = 500;
+    idle.remainingTime = 500;
 
-    const spy = vi.spyOn(IdleTimeout.prototype as any, 'resetTimeout');
+    const spy = vi.spyOn(idle, 'resetTimeout');
     document.body.dispatchEvent(new Event('mousemove'));
 
     expect(spy).not.toHaveBeenCalled();
@@ -278,41 +298,38 @@ describe('IdleTimeout class', () => {
 
   it('should ignore "mousemove" when "pageX" and "pageY" are "undefined"', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 1000 });
+    const idle = new TestIdleTimeout(cb, { timeout: 1000 });
 
-    const spy = vi.spyOn(IdleTimeout.prototype as any, 'resetTimeout');
+    const spy = vi.spyOn(idle, 'resetTimeout');
 
     // Dispatch mousemove without `pageX`/`pageY` - ensure properties are `undefined`
     const m = new MouseEvent('mousemove', { bubbles: true });
-    try {
-      Object.defineProperty(m, 'pageX', { value: undefined });
-      Object.defineProperty(m, 'pageY', { value: undefined });
-    } catch (e) {
-      // Some environments might not allow redefining; ignore
-    }
+    Object.defineProperty(m, 'pageX', { value: undefined });
+    Object.defineProperty(m, 'pageY', { value: undefined });
     document.body.dispatchEvent(m);
 
     expect(spy).not.toHaveBeenCalled();
     spy.mockRestore();
+    idle.destroy();
   });
 
   it('should return early from pause if "timeout" already expired', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 1000 });
+    const idle = new TestIdleTimeout(cb, { timeout: 1000 });
 
     // Simulate a start time far in the past to force `remainingTime` <= `0`
-    (idle as any).startTime = new Date().getTime() - 5000;
+    idle.startTime = Date.now() - 5000;
 
     idle.pause();
 
-    expect((idle as any).remainingTime).toBe(0);
+    expect(idle.remainingTime).toBe(0);
   });
 
   it('should return early from resume when there is no "remainingTime"', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 1000 });
+    const idle = new TestIdleTimeout(cb, { timeout: 1000 });
 
-    const spy = vi.spyOn(IdleTimeout.prototype as any, 'resetTimeout');
+    const spy = vi.spyOn(idle, 'resetTimeout');
     // `remainingTime` is `0` by default
     idle.resume();
     expect(spy).not.toHaveBeenCalled();
@@ -321,18 +338,18 @@ describe('IdleTimeout class', () => {
 
   it('should update options via setters for "loop" and "timeout"', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 1000, loop: false });
+    const idle = new TestIdleTimeout(cb, { timeout: 1000, loop: false });
 
     idle.loop = true;
-    expect((idle as any).options.loop).toBe(true);
+    expect(idle.options.loop).toBe(true);
 
     idle.timeout = 12345;
-    expect((idle as any).options.timeout).toBe(12345);
+    expect(idle.options.timeout).toBe(12345);
   });
 
   it('should restart the active timer when setting "timeout"', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 1000 });
+    const idle = new TestIdleTimeout(cb, { timeout: 1000 });
 
     vi.advanceTimersByTime(500);
     idle.timeout = 200;
@@ -345,39 +362,39 @@ describe('IdleTimeout class', () => {
 
   it('should clear existing timeout handle when resetting', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 1000 });
+    const idle = new TestIdleTimeout(cb, { timeout: 1000 });
 
     // Ensure a `timeoutHandle` exists
-    expect((idle as any).timeoutHandle).not.toBeNull();
+    expect(idle.timeoutHandle).not.toBeNull();
 
-    const prev = (idle as any).timeoutHandle;
+    const prev = idle.timeoutHandle;
     // Call `resetTimeout` directly to force clearing
-    (idle as any).resetTimeout();
+    idle.resetTimeout();
 
     // `timeoutHandle` should be replaced (or `null` then set again)
-    expect((idle as any).timeoutHandle).not.toBe(prev);
+    expect(idle.timeoutHandle).not.toBe(prev);
   });
 
   it('should not set new timeout when "isIdle" and "loop=false"', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 1000, loop: false });
+    const idle = new TestIdleTimeout(cb, { timeout: 1000, loop: false });
 
     // Set idle state and ensure loop is `false`
-    (idle as any).isIdle = true;
+    idle.isIdle = true;
     idle.loop = false;
 
     // Spy on `setTimeout`
     const spy = vi.spyOn(window, 'setTimeout');
-    (idle as any).resetTimeout();
+    idle.resetTimeout();
     expect(spy).not.toHaveBeenCalled();
     spy.mockRestore();
   });
 
   it('should reset timeout on non-"mousemove" events', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 1000 });
+    const idle = new TestIdleTimeout(cb, { timeout: 1000 });
 
-    const spy = vi.spyOn(idle as any, 'resetTimeout');
+    const spy = vi.spyOn(idle, 'resetTimeout');
 
     // Dispatch a non-mousemove event
     document.body.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true }));
@@ -388,12 +405,12 @@ describe('IdleTimeout class', () => {
 
   it('should not call "clearTimeout" when "timeoutHandle" is "null" during pause', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 1000 });
+    const idle = new TestIdleTimeout(cb, { timeout: 1000 });
 
     // Ensure ` remainingTime` positive by setting `startTime` to now
-    (idle as any).startTime = new Date().getTime();
+    idle.startTime = Date.now();
     // Ensure `timeoutHandle` is `null`
-    (idle as any).timeoutHandle = null;
+    idle.timeoutHandle = null;
 
     const spy = vi.spyOn(window, 'clearTimeout');
     idle.pause();
@@ -403,10 +420,10 @@ describe('IdleTimeout class', () => {
 
   it('should clear timeout during destroy if "timeoutHandle" present', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 1000 });
+    const idle = new TestIdleTimeout(cb, { timeout: 1000 });
 
     // Simulate existing `timeoutHandle`
-    (idle as any).timeoutHandle = 123 as any;
+    idle.timeoutHandle = 123;
 
     const spy = vi.spyOn(window, 'clearTimeout');
     idle.destroy();
@@ -416,9 +433,9 @@ describe('IdleTimeout class', () => {
 
   it('should not call "clearTimeout" during destroy when "timeoutHandle" is "null"', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 1000 });
+    const idle = new TestIdleTimeout(cb, { timeout: 1000 });
 
-    (idle as any).timeoutHandle = null;
+    idle.timeoutHandle = null;
     const spy = vi.spyOn(window, 'clearTimeout');
     idle.destroy();
     expect(spy).not.toHaveBeenCalled();
@@ -427,7 +444,7 @@ describe('IdleTimeout class', () => {
 
   it('should not restart or trigger after destroy', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 100 });
+    const idle = new TestIdleTimeout(cb, { timeout: 100 });
 
     idle.destroy();
     idle.pause();
@@ -436,8 +453,8 @@ describe('IdleTimeout class', () => {
     idle.timeout = 50;
     idle.idle = true;
     idle.destroy();
-    (idle as any).handleEvent(new KeyboardEvent('keydown'));
-    (idle as any).handleTimeout();
+    idle.handleEvent(new KeyboardEvent('keydown'));
+    idle.handleTimeout();
 
     vi.advanceTimersByTime(100);
     expect(cb).not.toHaveBeenCalled();
@@ -445,15 +462,13 @@ describe('IdleTimeout class', () => {
 
   it('should treat "mousemove" with one "undefined" coordinate as activity', () => {
     const cb = vi.fn();
-    const idle = new IdleTimeout(cb, { timeout: 1000 });
+    const idle = new TestIdleTimeout(cb, { timeout: 1000 });
 
-    const spy = vi.spyOn(idle as any, 'resetTimeout');
+    const spy = vi.spyOn(idle, 'resetTimeout');
 
     const m = new MouseEvent('mousemove', { bubbles: true });
     Object.defineProperty(m, 'pageX', { value: 5 });
-    try {
-      Object.defineProperty(m, 'pageY', { value: undefined });
-    } catch (e) {}
+    Object.defineProperty(m, 'pageY', { value: undefined });
 
     document.body.dispatchEvent(m);
 

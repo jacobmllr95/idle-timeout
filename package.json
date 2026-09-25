@@ -51,12 +51,13 @@
   "scripts": {
     "build": "tsdown",
     "watch": "tsdown --watch",
-    "typecheck": "tsc --noEmit",
-    "lint": "oxlint --type-aware --deny-warnings --report-unused-disable-directives src",
+    "typecheck": "tsc --project tsconfig.check.json",
+    "lint": "oxlint --type-aware --tsconfig tsconfig.check.json --deny-warnings --report-unused-disable-directives src tests scripts *.config.ts *.config.mts",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "playwright test",
+    "test:e2e": "pnpm build && playwright test",
+    "check:package": "pnpm build && node scripts/check-package.mjs",
     "format:check": "prettier --ignore-path .gitignore --ignore-path .prettierignore --check .",
     "prettify": "prettier --ignore-path .gitignore --ignore-path .prettierignore --write .",
     "prepare": "npm run build"

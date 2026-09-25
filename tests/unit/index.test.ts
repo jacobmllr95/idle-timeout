@@ -8,6 +8,9 @@ describe('idleTimeout', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
+    vi.clearAllTimers();
+    vi.useRealTimers();
+    document.body.replaceWith(document.createElement('body'));
   });
 
   it('should call callback after specified timeout', () => {

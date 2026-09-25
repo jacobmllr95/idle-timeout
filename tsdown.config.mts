@@ -24,10 +24,7 @@ const VERSION = pkg.version;
 const LIBRARY_NAME = toCamelCase(NAME);
 const CURRENT_YEAR = new Date().getFullYear();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const BASE_PATH = __dirname;
+const BASE_PATH = path.dirname(fileURLToPath(import.meta.url));
 const DIST_PATH = path.resolve(BASE_PATH, 'dist');
 const INPUT_PATH = path.resolve(BASE_PATH, pkg.index);
 

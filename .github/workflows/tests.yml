@@ -71,6 +71,9 @@ jobs:
       - name: Run Unit Tests with Coverage
         run: pnpm test:coverage
 
+      - name: Verify package exports and bundle sizes
+        run: pnpm check:package
+
       - name: Upload coverage reports to Codecov
         if: github.event_name == 'push'
         uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1

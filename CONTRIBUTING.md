@@ -36,12 +36,20 @@ pnpm format:check
 pnpm test
 pnpm test:coverage
 pnpm build
+pnpm check:package
+pnpm prettify
 ```
 
-`pnpm typecheck` uses the native TypeScript 7 compiler.
+`pnpm typecheck` uses the native TypeScript 7 compiler to check the library, tests, configuration files,
+and maintenance scripts through `tsconfig.check.json`. The build uses `tsconfig.json` for library sources.
 
-Oxlint enforces correctness, suspicious-code, and type-aware rules from `.oxlintrc.json`.
+Oxlint enforces correctness, suspicious-code, and type-aware rules from `.oxlintrc.json` across the same code.
 Prettier is the only tool responsible for formatting, so lint and formatting rules do not overlap.
+`pnpm prettify` also formats JSON, YAML, and build configuration files; generated files and the lockfile are ignored.
+
+`pnpm check:package` builds the library, checks native ESM and CommonJS package imports and declared entry points,
+and enforces raw and gzip byte budgets for all six JavaScript bundles. Budgets live in `scripts/check-package.mjs`;
+adjust them only for intentional, reviewed size increases. These checks run in CI and before publishing.
 
 For browser tests, install the Playwright browsers once:
 
@@ -49,6 +57,8 @@ For browser tests, install the Playwright browsers once:
 pnpm exec playwright install
 pnpm test:e2e
 ```
+
+`pnpm test:e2e` builds the current sources before testing both UMD variants.
 
 ## Pull Request Checklist
 
@@ -60,6 +70,7 @@ Before opening or updating a pull request, please make sure:
 - `pnpm format:check` passes.
 - `pnpm test:coverage` passes.
 - `pnpm build` passes.
+- `pnpm check:package` passes.
 - Dependency changes are intentional and reflected in `pnpm-lock.yaml`.
 - Public API changes are documented in `README.md`.
 
