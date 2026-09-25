@@ -1,36 +1,44 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
-test.describe('Browser Support', () => {
-  test('should trigger callback after timeout', async ({ page }) => {
-    // Install fake clock
-    await page.clock.install();
-    await page.goto('about:blank');
+for (const bundle of ['idle-timeout.umd.js', 'idle-timeout.min.umd.js']) {
+  test.describe(bundle, () => {
+    test.use({ bundle });
 
-    // Inject the built library
-    await page.addScriptTag({ path: './dist/idle-timeout.umd.js' });
+    test('calls back once with the monitored element and timeout', async ({ page, idleTimer }) => {
+      await page.clock.runFor(999);
+      expect(await idleTimer.calls()).toEqual([]);
 
-    // Setup library in browser context
-    await page.evaluate(() => {
-      (window as any).triggered = false;
+      await page.clock.runFor(1);
+      expect(await idleTimer.calls()).toEqual([{ elementIsDocument: true, timeout: 1000 }]);
 
-      // @ts-ignore
-      window.idleTimeout(
-        () => {
-          (window as any).triggered = true;
-        },
-        {
-          element: document,
-          timeout: 2000,
-          loop: false
-        }
-      );
+      await page.clock.runFor(1000);
+      expect(await idleTimer.calls()).toHaveLength(1);
     });
 
-    // Fast-forward time
-    await page.clock.runFor(2500);
+    test('restarts the countdown on keyboard activity', async ({ page, idleTimer }) => {
+      await page.clock.runFor(500);
+      await idleTimer.activity();
 
-    // Verify result
-    const triggered = await page.evaluate(() => (window as any).triggered);
-    expect(triggered).toBe(true);
+      await page.clock.runFor(999);
+      expect(await idleTimer.calls()).toEqual([]);
+
+      await page.clock.runFor(1);
+      expect(await idleTimer.calls()).toHaveLength(1);
+    });
+
+    test('resumes with the remaining time after a pause', async ({ page, idleTimer }) => {
+      await page.clock.runFor(400);
+      await idleTimer.pause();
+
+      await page.clock.runFor(2000);
+      expect(await idleTimer.calls()).toEqual([]);
+
+      await idleTimer.resume();
+      await page.clock.runFor(599);
+      expect(await idleTimer.calls()).toEqual([]);
+
+      await page.clock.runFor(1);
+      expect(await idleTimer.calls()).toHaveLength(1);
+    });
   });
-});
+}
