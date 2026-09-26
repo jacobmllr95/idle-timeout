@@ -17,9 +17,9 @@ updates:
           - jsdom
       lint-format-build:
         patterns:
+          - oxfmt
           - oxlint
           - oxlint-tsgolint
-          - prettier
           - tsdown
           - typescript
 

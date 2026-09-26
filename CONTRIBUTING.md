@@ -44,7 +44,9 @@ pnpm prettify
 and maintenance scripts through `tsconfig.check.json`. The build uses `tsconfig.json` for library sources.
 
 Oxlint enforces correctness, suspicious-code, and type-aware rules from `.oxlintrc.json` across the same code.
-Prettier is the only tool responsible for formatting, so lint and formatting rules do not overlap.
+Oxfmt handles formatting through `.oxfmtrc.json`, so lint and formatting rules do not overlap.
+The configuration keeps the existing style: 100-column line width, single quotes, and no trailing commas.
+Import and `package.json` key sorting are disabled.
 `pnpm prettify` also formats JSON, YAML, and build configuration files; generated files and the lockfile are ignored.
 
 `pnpm check:package` builds the library, checks native ESM and CommonJS package imports and declared entry points,
@@ -120,4 +122,4 @@ Dependency, workflow, and publishing changes affect the package supply chain. Pl
 
 ## Code Style
 
-Follow the existing TypeScript style and keep comments focused on behavior that is not obvious from the code. Formatting is handled by Prettier.
+Follow the existing TypeScript style and keep comments focused on behavior that is not obvious from the code. Formatting is handled by Oxfmt.

@@ -58,8 +58,8 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "pnpm build && playwright test",
     "check:package": "pnpm build && node scripts/check-package.mjs",
-    "format:check": "prettier --ignore-path .gitignore --ignore-path .prettierignore --check .",
-    "prettify": "prettier --ignore-path .gitignore --ignore-path .prettierignore --write .",
+    "format:check": "oxfmt --ignore-path .gitignore --check .",
+    "prettify": "oxfmt --ignore-path .gitignore --write .",
     "prepare": "npm run build"
   },
   "devDependencies": {
@@ -67,9 +67,9 @@
     "@types/node": "^26.6.2",
     "@vitest/coverage-v8": "^5.0.1",
     "jsdom": "^30.1.1",
+    "oxfmt": "^0.70.0",
     "oxlint": "^1.85.0",
     "oxlint-tsgolint": "7.0.2003",
-    "prettier": "^3.9.9",
     "tsdown": "0.23.0",
     "typescript": "^7.0.2",
     "vitest": "^5.0.1"
