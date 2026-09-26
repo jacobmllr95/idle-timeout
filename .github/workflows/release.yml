@@ -47,7 +47,9 @@ jobs:
           pnpm lint
           pnpm format:check
           pnpm test:coverage
-          pnpm check:package
+
+      - name: Build and verify package
+        run: pnpm check:package
 
       - name: Publish package with provenance
         run: npm publish --provenance --access public
